@@ -59,7 +59,7 @@ class WidgetsManager
             array(
                 'title' => "Menu Widget",
                 "id" => "",
-                "bundle" => "Menu",
+                "bundle" => "ArnmMenu",
                 "controller" => "PlainMenu"
             ),
             array(
