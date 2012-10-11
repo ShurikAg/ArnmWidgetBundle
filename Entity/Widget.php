@@ -12,6 +12,7 @@ use Arnm\WidgetBundle\Entity\Param;
  */
 class Widget
 {
+
     /**
      * @var integer $id
      *
@@ -20,73 +21,73 @@ class Widget
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-    
+
     /**
      * @var string $title
      *
      * @ORM\Column(name="title", type="string", length=100)
      */
     private $title;
-    
+
     /**
      * @var string $bundle
      *
      * @ORM\Column(name="bundle", type="string", length=100)
      */
     private $bundle;
-    
+
     /**
      * @var string $controller
      *
      * @ORM\Column(name="controller", type="string", length=100)
      */
     private $controller;
-    
+
     /**
      * @var string $action
      *
      * @ORM\Column(name="action", type="string", length=100, nullable=true)
      */
     private $action;
-    
+
     /**
      * @var smallint $sequence
      *
      * @ORM\Column(name="sequence", type="smallint")
      */
     private $sequence;
-    
+
     /**
      * @var string $area_code
      *
      * @ORM\Column(name="area_code", type="string", length=50)
      */
     private $area_code;
-    
+
     /**
      * @var integer $pageId
      *
      * @ORM\Column(name="page_id", type="integer")
      */
     private $pageId;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Arnm\PagesBundle\Entity\Page", inversedBy="widgets")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
      */
     private $page;
-    
+
     /**
      * @ORM\OneToMany(targetEntity="Param", mappedBy="widget")
      * @ORM\OrderBy({"name" = "ASC"})
      */
     private $params;
-    
+
     public function __construct()
     {
         $this->params = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get id
      *
@@ -96,7 +97,7 @@ class Widget
     {
         return $this->id;
     }
-    
+
     /**
      * Set bundle
      *
@@ -108,7 +109,7 @@ class Widget
         $this->bundle = $bundle;
         return $this;
     }
-    
+
     /**
      * Get bundle
      *
@@ -118,7 +119,7 @@ class Widget
     {
         return $this->bundle;
     }
-    
+
     /**
      * Set controller
      *
@@ -130,7 +131,7 @@ class Widget
         $this->controller = $controller;
         return $this;
     }
-    
+
     /**
      * Get controller
      *
@@ -140,7 +141,7 @@ class Widget
     {
         return $this->controller;
     }
-    
+
     /**
      * Set action
      *
@@ -152,7 +153,7 @@ class Widget
         $this->action = $action;
         return $this;
     }
-    
+
     /**
      * Get action
      *
@@ -162,7 +163,7 @@ class Widget
     {
         return $this->action;
     }
-    
+
     /**
      * Set sequence
      *
@@ -174,7 +175,7 @@ class Widget
         $this->sequence = $sequence;
         return $this;
     }
-    
+
     /**
      * Get sequence
      *
@@ -184,7 +185,7 @@ class Widget
     {
         return $this->sequence;
     }
-    
+
     /**
      * Set area_code
      *
@@ -196,7 +197,7 @@ class Widget
         $this->area_code = $areaCode;
         return $this;
     }
-    
+
     /**
      * Get area_code
      *
@@ -206,7 +207,7 @@ class Widget
     {
         return $this->area_code;
     }
-    
+
     /**
      * @return the $title
      */
@@ -214,7 +215,7 @@ class Widget
     {
         return $this->title;
     }
-    
+
     /**
      * @param string $title
      */
@@ -222,7 +223,7 @@ class Widget
     {
         $this->title = $title;
     }
-    
+
     /**
      * Set page_id
      *
@@ -234,7 +235,7 @@ class Widget
         $this->pageId = $pageId;
         return $this;
     }
-    
+
     /**
      * Get page_id
      *
@@ -244,7 +245,7 @@ class Widget
     {
         return $this->pageId;
     }
-    
+
     /**
      * Set page
      *
@@ -256,7 +257,7 @@ class Widget
         $this->page = $page;
         return $this;
     }
-    
+
     /**
      * Get page
      *
@@ -266,7 +267,7 @@ class Widget
     {
         return $this->page;
     }
-    
+
     /**
      * Add params
      *
@@ -278,7 +279,7 @@ class Widget
         $this->params[] = $params;
         return $this;
     }
-    
+
     /**
      * Get params
      *
@@ -288,26 +289,26 @@ class Widget
     {
         return $this->params;
     }
-    
+
     /**
      * Finds parameter from the list of params for this widget by it's name
      *
      * @param string $name
-     * 
+     *
      * @return Param
      */
     public function getParamByName($name)
     {
-        if(count($this->getParams()) == 0) {
+        if (count($this->getParams()) == 0) {
             return null;
         }
-        
+
         foreach ($this->getParams() as $param) {
-            if($param->getName() == $name) {
+            if ($param->getName() == $name) {
                 return $param;
             }
         }
-        
+
         return null;
     }
 }

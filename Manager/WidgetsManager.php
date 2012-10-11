@@ -105,7 +105,7 @@ class WidgetsManager
      */
     public function addNewWidgetToPage(Page $page, $title, $bundle, $controller, $areaCode, $index)
     {
-        if(! $this->isAreaAssignedToPage($page, $areaCode)) {
+        if (! $this->isAreaAssignedToPage($page, $areaCode)) {
             throw new \InvalidArgumentException("Area code '" . $areaCode . "' is not assigned to the page!");
         }
         $em = $this->getEntityManager();
@@ -148,16 +148,16 @@ class WidgetsManager
     {
         //find the widget and validate that the widget is in fact related to this page
         $widget = $this->findWidgetById($widgetId);
-        if(! ($widget instanceof Widget)) {
+        if (! ($widget instanceof Widget)) {
             throw new \RuntimeException("Could not find widget with ID: '" . $widgetId . "'!");
         }
         //validate that the widget that we found is actual related to this page.
         //we can't move widget between the pages
-        if($widget->getPage()->getId() !== $page->getId()) {
+        if ($widget->getPage()->getId() !== $page->getId()) {
             throw new \RuntimeException("Moving widgets between pages is not supported");
         }
         //make sure that the target area is also defined in the page
-        if(! $this->isAreaAssignedToPage($page, $targetArea)) {
+        if (! $this->isAreaAssignedToPage($page, $targetArea)) {
             throw new \InvalidArgumentException("Area code '" . $targetArea . "' is not assigned to the page!");
         }
         //now we can start performing the move
@@ -194,18 +194,18 @@ class WidgetsManager
         $widgets = $page->getWidgets();
         //find how many widgets already in the given area
         $widgetsInArea = 0;
-        if($widgets->count() > 0) {
+        if ($widgets->count() > 0) {
             foreach ($widgets->toArray() as $wgt) {
-                if($wgt->getAreaCode() == $areaCode) {
+                if ($wgt->getAreaCode() == $areaCode) {
                     $widgetsInArea ++;
                 }
             }
         }
         $sequence = 0;
-        if($widgetsInArea === 0) {
+        if ($widgetsInArea === 0) {
             //this is the only widget in this are, so sequense going to be 0 in any case
             $sequence = 0;
-        } elseif($widgetsInArea <= $index) {
+        } elseif ($widgetsInArea <= $index) {
             //if the new index as a number of existing widgets or greater, the the new widget going to be the last one
             $sequence = $widgetsInArea;
         } else {
@@ -258,7 +258,7 @@ class WidgetsManager
     {
         $areas = $page->getTemplate()->getAreas();
         foreach ($areas as $area) {
-            if($area->getCode() == $areaCode) {
+            if ($area->getCode() == $areaCode) {
                 return true;
             }
         }
@@ -289,7 +289,7 @@ class WidgetsManager
      */
     public function getWidgetRepository()
     {
-        if(is_null($this->widgetRepository)) {
+        if (is_null($this->widgetRepository)) {
             $this->widgetRepository = $this->getEntityManager()->getRepository('ArnmWidgetBundle:Widget');
         }
         return $this->widgetRepository;
