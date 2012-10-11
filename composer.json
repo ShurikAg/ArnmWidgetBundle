@@ -1,0 +1,25 @@
+{
+    "name": "iibs/arnm-widget",
+    "description": "Araneum's widgets bundle",
+    "version": "1.0.0-beta",
+    "authors": [
+        {
+            "name": "Alex Agulyansky",
+            "email": "alex@iibspro.com",
+            "homepage": "http://www.iibspro.com",
+            "role": "Dev Lead"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Arnm\\WidgetBundle": "" }
+    },
+    "target-dir": "Arnm/WidgetBundle",
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/symfony": "2.1.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "stof/doctrine-extensions-bundle": "dev-master",
+        "iibs/arnm-core": "dev-master",
+        "iibs/arnm-pages": "dev-master"
+    }
+}
