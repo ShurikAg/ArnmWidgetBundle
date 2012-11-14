@@ -274,7 +274,7 @@ class Widget
      * @param Arnm\WidgetBundle\Entity\Param $params
      * @return Widget
      */
-    public function addParam(Arnm\WidgetBundle\Entity\Param $params)
+    public function addParam(\Arnm\WidgetBundle\Entity\Param $params)
     {
         $this->params[] = $params;
         return $this;
