@@ -69,6 +69,12 @@ class WidgetsManager
                 "controller" => "SlideShow"
             ),
             array(
+                'title' => "Small Slide Show Widget",
+                "id" => "",
+                "bundle" => "MediaContent",
+                "controller" => "SmallSlideShow"
+            ),
+            array(
                 'title' => "Filmstrip Widget",
                 "id" => "",
                 "bundle" => "MediaContent",
