@@ -1,6 +1,7 @@
 <?php
 namespace Arnm\WidgetBundle\Manager;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Arnm\WidgetBundle\Entity\WidgetRepository;
 use Arnm\WidgetBundle\Entity\Widget;
 use Arnm\PagesBundle\Entity\Page;
@@ -25,6 +26,13 @@ class WidgetsManager
      * @var WidgetRepository
      */
     private $widgetRepository;
+
+    /**
+     * Temp caching for pages widgets
+     *
+     * @var array
+     */
+    private $widgetsLists = array();
 
     /**
      * Constructor
@@ -93,6 +101,43 @@ class WidgetsManager
                 "controller" => "ShowcaseContainer"
             )
         );
+    }
+
+    /**
+     * Gets the whole structure of widget for given page
+     *
+     * @param Page $page
+     *
+     * @return ArrayCollection
+     */
+    public function findAllWidgetForPage(Page $page)
+    {
+        $pageId = $page->getId();
+        if (! isset($this->widgetsLists[$pageId])) {
+            $this->widgetsLists[$pageId] = $this->getWidgetRepository()->findAllByPageId($page->getId());
+        }
+
+        return $this->widgetsLists[$pageId];
+    }
+
+    /**
+     * Gets an subset of widgets our of given collection for area code
+     *
+     * @param array $widgets
+     * @param string $areaCode
+     *
+     * @return array
+     */
+    public function filterWidgetsByArea(array $widgets, $areaCode)
+    {
+        $filtered = array();
+        foreach ($widgets as $widget) {
+            if ($widget->getAreaCode() == $areaCode) {
+                $filtered[] = $widget;
+            }
+        }
+
+        return $filtered;
     }
 
     /**
@@ -244,7 +289,7 @@ class WidgetsManager
     {
         $em = $this->getEntityManager();
         $q = $em->createQuery(
-        "UPDATE ArnmWidgetBundle:Widget w SET w.sequence = (w.sequence - 1) WHERE w.sequence > :sequence AND w.area_code = :code  AND w.id <> :id");
+            "UPDATE ArnmWidgetBundle:Widget w SET w.sequence = (w.sequence - 1) WHERE w.sequence > :sequence AND w.area_code = :code  AND w.id <> :id");
         $q->setParameter('sequence', $widget->getSequence());
         $q->setParameter('code', $widget->getAreaCode());
         $q->setParameter('id', $widget->getId());

@@ -13,4 +13,13 @@ use Doctrine\ORM\EntityRepository;
 class WidgetRepository extends EntityRepository
 {
 
+    public function findAllByPageId($pageId)
+    {
+        $qBuilder = $this->createQueryBuilder('w');
+        $qBuilder->addSelect('p');
+        $qBuilder->leftJoin('w.params', 'p');
+        $qBuilder->where('w.pageId = :pageId')->setParameter('pageId', $pageId);
+
+        return $qBuilder->getQuery()->getResult();
+    }
 }
