@@ -19,6 +19,7 @@
         "symfony/symfony": "2.1.*",
         "doctrine/orm": ">=2.2.3,<2.4-dev",
         "stof/doctrine-extensions-bundle": "dev-master",
-        "iibs/arnm-core": "dev-master"
+        "iibs/arnm-core": "dev-master",
+        "iibs/arnm-pages": "dev-master"
     }
 }
