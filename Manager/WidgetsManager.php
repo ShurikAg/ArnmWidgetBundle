@@ -322,7 +322,7 @@ class WidgetsManager
      */
     protected function getEntityManager()
     {
-        return $this->getDoctrine()->getEntityManager();
+        return $this->getDoctrine()->getManager();
     }
     /**
      * Gets doctrin service object
