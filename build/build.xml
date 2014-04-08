@@ -53,7 +53,7 @@
 		</exec>
 		-->
 		<exec executable="composer.phar" failonerror="true">
-			<arg value="update" />
+			<arg value="install" />
 		</exec>
 	</target>
 

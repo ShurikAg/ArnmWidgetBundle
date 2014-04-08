@@ -76,7 +76,7 @@ class WidgetsManagerTest extends \PHPUnit_Framework_TestCase
             'getConnection'
         ), array(), '', false, true, true);
         $doctrine = $this->getMock('Doctrine\Bundle\DoctrineBundle\Registry', array(
-            'getEntityManager'
+            'getManager'
         ), array(), '', false, true, true);
         $connection = $this->getMock('Doctrine\DBAL\Connection', array(
             'beginTransaction',
@@ -95,7 +95,7 @@ class WidgetsManagerTest extends \PHPUnit_Framework_TestCase
         $em->expects($this->once())
             ->method('persist');
         $doctrine->expects($this->once())
-            ->method('getEntityManager')
+            ->method('getManager')
             ->will($this->returnValue($em));
 
         $mgr = new WidgetsManager($doctrine);
