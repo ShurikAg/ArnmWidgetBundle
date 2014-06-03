@@ -19,6 +19,7 @@ class WidgetRepository extends EntityRepository
         $qBuilder->addSelect('p');
         $qBuilder->leftJoin('w.params', 'p');
         $qBuilder->where('w.pageId = :pageId')->setParameter('pageId', $pageId);
+        $qBuilder->orderBy('w.sequence', 'ASC');
 
         return $qBuilder->getQuery()->getResult();
     }

@@ -1,6 +1,8 @@
 <?php
 namespace Arnm\WidgetBundle\Entity;
 
+use Arnm\CoreBundle\Entity\Entity;
+
 use Doctrine\ORM\Mapping as ORM;
 use Arnm\PagesBundle\Entity\Page;
 use Arnm\WidgetBundle\Entity\Param;
@@ -10,7 +12,7 @@ use Arnm\WidgetBundle\Entity\Param;
  * @ORM\Table(name="widget")
  * @ORM\Entity(repositoryClass="Arnm\WidgetBundle\Entity\WidgetRepository")
  */
-class Widget
+class Widget extends Entity
 {
 
     /**

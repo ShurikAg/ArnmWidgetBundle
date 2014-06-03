@@ -113,11 +113,39 @@ class WidgetsManager
     public function findAllWidgetForPage(Page $page)
     {
         $pageId = $page->getId();
-        if (! isset($this->widgetsLists[$pageId])) {
+        if (!isset($this->widgetsLists[$pageId])) {
             $this->widgetsLists[$pageId] = $this->getWidgetRepository()->findAllByPageId($page->getId());
         }
 
         return $this->widgetsLists[$pageId];
+    }
+
+    /**
+     * Reorganizes flat list of widgets into multi-dimentional array by area code
+     *
+     * @param array $widgets
+     *
+     * @return array
+     */
+    public function reorganizeByArea(Page $page, array $widgets = array(), $asArray = false)
+    {
+        //get all the areas first
+        $em = $this->getEntityManager();
+        $areas = $em->getRepository('ArnmPagesBundle:Area')->findByTemplateId($page->getTemplate()->getId());
+        $organized = array();
+        foreach ($areas as $area) {
+            $organized[$area->getCode()] = array();
+        }
+
+        foreach ($widgets as $widget) {
+            $areaCode = $widget->getAreaCode();
+//            if (!isset($organized[$areaCode]) || !is_array($organized[$areaCode])) {
+//                $organized[$areaCode] = array();
+//            }
+            $organized[$areaCode][] = (($asArray) ? $widget->toArray() : $widget);
+        }
+
+        return $organized;
     }
 
     /**
@@ -156,7 +184,7 @@ class WidgetsManager
      */
     public function addNewWidgetToPage(Page $page, $title, $bundle, $controller, $areaCode, $index)
     {
-        if (! $this->isAreaAssignedToPage($page, $areaCode)) {
+        if (!$this->isAreaAssignedToPage($page, $areaCode)) {
             throw new \InvalidArgumentException("Area code '" . $areaCode . "' is not assigned to the page!");
         }
         $em = $this->getEntityManager();
@@ -199,7 +227,7 @@ class WidgetsManager
     {
         //find the widget and validate that the widget is in fact related to this page
         $widget = $this->findWidgetById($widgetId);
-        if (! ($widget instanceof Widget)) {
+        if (!($widget instanceof Widget)) {
             throw new \RuntimeException("Could not find widget with ID: '" . $widgetId . "'!");
         }
         //validate that the widget that we found is actual related to this page.
@@ -208,7 +236,7 @@ class WidgetsManager
             throw new \RuntimeException("Moving widgets between pages is not supported");
         }
         //make sure that the target area is also defined in the page
-        if (! $this->isAreaAssignedToPage($page, $targetArea)) {
+        if (!$this->isAreaAssignedToPage($page, $targetArea)) {
             throw new \InvalidArgumentException("Area code '" . $targetArea . "' is not assigned to the page!");
         }
         //now we can start performing the move
@@ -225,7 +253,7 @@ class WidgetsManager
             $em->flush();
             $em->getConnection()->commit();
             return $widget;
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $em->getConnection()->rollback();
             throw $e;
         }
@@ -248,7 +276,7 @@ class WidgetsManager
         if ($widgets->count() > 0) {
             foreach ($widgets->toArray() as $wgt) {
                 if ($wgt->getAreaCode() == $areaCode) {
-                    $widgetsInArea ++;
+                    $widgetsInArea++;
                 }
             }
         }
@@ -288,8 +316,7 @@ class WidgetsManager
     protected function removeWidgetFromArea(Widget $widget)
     {
         $em = $this->getEntityManager();
-        $q = $em->createQuery(
-            "UPDATE ArnmWidgetBundle:Widget w SET w.sequence = (w.sequence - 1) WHERE w.sequence > :sequence AND w.area_code = :code  AND w.id <> :id");
+        $q = $em->createQuery("UPDATE ArnmWidgetBundle:Widget w SET w.sequence = (w.sequence - 1) WHERE w.sequence > :sequence AND w.area_code = :code  AND w.id <> :id");
         $q->setParameter('sequence', $widget->getSequence());
         $q->setParameter('code', $widget->getAreaCode());
         $q->setParameter('id', $widget->getId());
