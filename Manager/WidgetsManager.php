@@ -139,9 +139,9 @@ class WidgetsManager
 
         foreach ($widgets as $widget) {
             $areaCode = $widget->getAreaCode();
-//            if (!isset($organized[$areaCode]) || !is_array($organized[$areaCode])) {
-//                $organized[$areaCode] = array();
-//            }
+            //            if (!isset($organized[$areaCode]) || !is_array($organized[$areaCode])) {
+            //                $organized[$areaCode] = array();
+            //            }
             $organized[$areaCode][] = (($asArray) ? $widget->toArray() : $widget);
         }
 
@@ -166,6 +166,31 @@ class WidgetsManager
         }
 
         return $filtered;
+    }
+
+    /**
+     * Deletes widget and it's parameters
+     *
+     * @param Widget $widget
+     *
+     * @throws \Exception
+     */
+    public function deleteWidget(Widget $widget)
+    {
+        $em = $this->getEntityManager();
+        $em->getConnection()->beginTransaction();
+        try {
+            foreach ($widget->getParams() as $param) {
+                $em->remove($param);
+            }
+            $em->remove($widget);
+
+            $em->flush();
+            $em->getConnection()->commit();
+        } catch (\Exception $e) {
+            $em->getConnection()->rollback();
+            throw $e;
+        }
     }
 
     /**
