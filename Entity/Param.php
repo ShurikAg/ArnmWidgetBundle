@@ -3,15 +3,23 @@
 namespace Arnm\WidgetBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Blameable\Traits\BlameableEntity;
 /**
  * Arnm\WidgetBundle\Entity\Param
  *
  * @ORM\Table(name="param")
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Gedmo\Loggable
  */
 class Param
 {
+    use SoftDeleteableEntity;
+    use TimestampableEntity;
+    use BlameableEntity;
 
     /**
      * @var integer $id
@@ -26,6 +34,7 @@ class Param
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * @Gedmo\Versioned
      */
     private $name;
 
@@ -33,12 +42,14 @@ class Param
      * @var text $value
      *
      * @ORM\Column(name="value", type="text")
+     * @Gedmo\Versioned
      */
     private $value;
 
     /**
      * @ORM\ManyToOne(targetEntity="Widget", inversedBy="params")
      * @ORM\JoinColumn(name="widget_id", referencedColumnName="id")
+     * @Gedmo\Versioned
      */
     private $widget;
 

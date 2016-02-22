@@ -6,14 +6,23 @@ use Arnm\CoreBundle\Entity\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Arnm\PagesBundle\Entity\Page;
 use Arnm\WidgetBundle\Entity\Param;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Blameable\Traits\BlameableEntity;
 /**
  * Arnm\WidgetBundle\Entity\Widget
  *
  * @ORM\Table(name="widget")
  * @ORM\Entity(repositoryClass="Arnm\WidgetBundle\Entity\WidgetRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Gedmo\Loggable
  */
 class Widget extends Entity
 {
+    use SoftDeleteableEntity;
+    use TimestampableEntity;
+    use BlameableEntity;
 
     /**
      * @var integer $id
@@ -28,6 +37,7 @@ class Widget extends Entity
      * @var string $title
      *
      * @ORM\Column(name="title", type="string", length=100)
+     * @Gedmo\Versioned
      */
     private $title;
 
@@ -35,6 +45,7 @@ class Widget extends Entity
      * @var string $bundle
      *
      * @ORM\Column(name="bundle", type="string", length=100)
+     * @Gedmo\Versioned
      */
     private $bundle;
 
@@ -42,6 +53,7 @@ class Widget extends Entity
      * @var string $controller
      *
      * @ORM\Column(name="controller", type="string", length=100)
+     * @Gedmo\Versioned
      */
     private $controller;
 
@@ -49,6 +61,7 @@ class Widget extends Entity
      * @var string $action
      *
      * @ORM\Column(name="action", type="string", length=100, nullable=true)
+     * @Gedmo\Versioned
      */
     private $action;
 
@@ -56,6 +69,7 @@ class Widget extends Entity
      * @var smallint $sequence
      *
      * @ORM\Column(name="sequence", type="smallint")
+     * @Gedmo\Versioned
      */
     private $sequence;
 
@@ -63,6 +77,7 @@ class Widget extends Entity
      * @var string $area_code
      *
      * @ORM\Column(name="area_code", type="string", length=50)
+     * @Gedmo\Versioned
      */
     private $area_code;
 
@@ -76,6 +91,7 @@ class Widget extends Entity
     /**
      * @ORM\ManyToOne(targetEntity="Arnm\PagesBundle\Entity\Page", inversedBy="widgets")
      * @ORM\JoinColumn(name="page_id", referencedColumnName="id")
+     * @Gedmo\Versioned
      */
     private $page;
 

@@ -1,25 +1,25 @@
 {
-    "name": "iibs/arnm-widget",
-    "description": "Araneum's widgets bundle",
-    "version": "1.0.2",
-    "authors": [
-        {
-            "name": "Alex Agulyansky",
-            "email": "alex@iibspro.com",
-            "homepage": "http://www.iibspro.com",
-            "role": "Dev Lead"
-        }
-    ],
-    "autoload": {
-        "psr-0": { "Arnm\\WidgetBundle": "" }
-    },
-    "target-dir": "Arnm/WidgetBundle",
-    "require": {
-	"php": ">=5.3.9",
-        "symfony/symfony": "2.7.*",
-        "doctrine/orm": "~2.2,>=2.2.3,<2.5",
-        "stof/doctrine-extensions-bundle": "dev-master",
-        "iibs/arnm-core": "1.0.*",
-        "iibs/arnm-pages": "1.0.*"
+  "name" : "iibs/arnm-widget",
+  "description" : "Araneum's widgets bundle",
+  "version" : "1.0.3",
+  "require" : {
+    "php" : ">=5.3.9",
+    "symfony/symfony" : "2.7.*",
+    "doctrine/orm" : "~2.2,>=2.2.3,<2.5",
+    "stof/doctrine-extensions-bundle" : "dev-master",
+    "iibs/arnm-core" : "1.0.*",
+    "iibs/arnm-pages" : "1.0.*"
+  },
+  "autoload" : {
+    "psr-0" : {
+      "Arnm\\WidgetBundle" : ""
     }
+  },
+  "target-dir" : "Arnm/WidgetBundle",
+  "authors" : [ {
+    "name" : "Alex Agulyansky",
+    "email" : "alex@iibspro.com",
+    "homepage" : "http://www.iibspro.com",
+    "role" : "Dev Lead"
+  } ]
 }
